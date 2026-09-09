@@ -1,22 +1,34 @@
-"use client";
-
 import { useState } from "react";
-import { FACTS, type T } from "@/i18n/content";
+import type { T } from "@/i18n/content";
+import { supabase } from "@/integrations/supabase/client";
+import { money, orderTotals, type SiteSettings } from "@/lib/settings";
+import { PRICE_T } from "@/i18n/pricing";
 
 type TT = (typeof T)["ar"];
 type Errors = { name?: string; phone?: string; wilaya?: string };
 
 /**
- * Order form — no backend, no payment (the brand's real channel is WhatsApp,
- * printed on the packaging). The complete order is composed and sent to the
- * official WhatsApp number +213 796 02 85 88.
+ * Order form — saves the order in the dashboard, then hands the customer
+ * over to WhatsApp with the full order (price included).
  */
-export function OrderForm({ t }: { t: TT }) {
+export function OrderForm({
+  t,
+  lang,
+  settings,
+}: {
+  t: TT;
+  lang: "ar" | "fr";
+  settings: SiteSettings;
+}) {
+  const p = PRICE_T[lang];
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [wilaya, setWilaya] = useState("");
   const [qty, setQty] = useState(1);
   const [errors, setErrors] = useState<Errors>({});
+  const [sending, setSending] = useState(false);
+
+  const totals = orderTotals(settings, qty);
 
   const validate = (): Errors => {
     const e: Errors = {};
@@ -26,14 +38,28 @@ export function OrderForm({ t }: { t: TT }) {
     return e;
   };
 
-  const onSubmit = (ev: React.FormEvent) => {
+  const onSubmit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     const e = validate();
     setErrors(e);
     if (Object.keys(e).length > 0) return;
 
+    setSending(true);
+    try {
+      await supabase.from("orders").insert({
+        name: name.trim(),
+        phone: phone.trim(),
+        wilaya: wilaya.trim(),
+        qty,
+        total_da: settings.show_prices ? totals.total : 0,
+      });
+    } catch {
+      /* the WhatsApp handover is the source of truth — never block it */
+    }
+    setSending(false);
+
     const qtyLabel = `${qty} ${qty === 1 ? t.order.box : t.order.boxes}`;
-    const msg = [
+    const lines = [
       t.waMessage,
       "",
       `— ${t.order.title} —`,
@@ -41,10 +67,15 @@ export function OrderForm({ t }: { t: TT }) {
       `${t.order.phone}: ${phone.trim()}`,
       `${t.order.wilaya}: ${wilaya.trim()}`,
       `${t.order.qty}: ${qtyLabel}`,
-    ].join("\n");
+    ];
+    if (settings.show_prices) {
+      lines.push(`${p.subtotal}: ${money(totals.goods, lang, settings)}`);
+      lines.push(`${p.delivery}: ${money(totals.delivery, lang, settings)}`);
+      lines.push(`${p.total}: ${money(totals.total, lang, settings)}`);
+    }
 
     window.open(
-      `https://wa.me/${FACTS.whatsapp}?text=${encodeURIComponent(msg)}`,
+      `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(lines.join("\n"))}`,
       "_blank",
       "noopener",
     );
@@ -72,11 +103,10 @@ export function OrderForm({ t }: { t: TT }) {
             onChange={(e) => setName(e.target.value)}
             placeholder={t.order.namePh}
             aria-invalid={Boolean(errors.name)}
-            aria-describedby={errors.name ? "ord-err-name" : undefined}
             className={inputCls}
           />
           {errors.name && (
-            <p id="ord-err-name" role="alert" className={errCls}>
+            <p role="alert" className={errCls}>
               {errors.name}
             </p>
           )}
@@ -96,11 +126,10 @@ export function OrderForm({ t }: { t: TT }) {
               onChange={(e) => setPhone(e.target.value)}
               placeholder={t.order.phonePh}
               aria-invalid={Boolean(errors.phone)}
-              aria-describedby={errors.phone ? "ord-err-phone" : undefined}
               className={inputCls}
             />
             {errors.phone && (
-              <p id="ord-err-phone" role="alert" className={errCls}>
+              <p role="alert" className={errCls}>
                 {errors.phone}
               </p>
             )}
@@ -116,11 +145,10 @@ export function OrderForm({ t }: { t: TT }) {
               onChange={(e) => setWilaya(e.target.value)}
               placeholder={t.order.wilayaPh}
               aria-invalid={Boolean(errors.wilaya)}
-              aria-describedby={errors.wilaya ? "ord-err-wilaya" : undefined}
               className={inputCls}
             />
             {errors.wilaya && (
-              <p id="ord-err-wilaya" role="alert" className={errCls}>
+              <p role="alert" className={errCls}>
                 {errors.wilaya}
               </p>
             )}
@@ -147,13 +175,37 @@ export function OrderForm({ t }: { t: TT }) {
           </div>
         </div>
 
+        {settings.show_prices && (
+          <div className="grid gap-1.5 rounded-2xl border border-line bg-sand2 p-5 text-sm">
+            <div className="flex justify-between">
+              <span>
+                {p.unit} × {qty}
+              </span>
+              <span className="font-bold">{money(totals.goods, lang, settings)}</span>
+            </div>
+            <div className="flex justify-between">
+              <span>{p.delivery}</span>
+              <span className="font-bold">{money(totals.delivery, lang, settings)}</span>
+            </div>
+            <div className="mt-1 flex justify-between border-t border-line pt-2 text-lg">
+              <span className="font-extrabold text-gold-ink">{p.total}</span>
+              <span className="font-extrabold text-gold-ink">
+                {money(totals.total, lang, settings)}
+              </span>
+            </div>
+          </div>
+        )}
+
         <button
           type="submit"
-          className="rounded-full bg-wa px-7 py-3.5 font-extrabold text-white transition-transform hover:-translate-y-0.5"
+          disabled={sending}
+          className="rounded-full bg-wa px-7 py-3.5 font-extrabold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
         >
           💬 {t.order.submit}
         </button>
-        <p className="text-sm text-ink/70">{t.order.note}</p>
+        <p className="text-sm text-ink/70">
+          {(lang === "ar" ? settings.order_note_ar : settings.order_note_fr) || t.order.note}
+        </p>
       </fieldset>
     </form>
   );
