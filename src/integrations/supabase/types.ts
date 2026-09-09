@@ -14,7 +14,66 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      site_settings: {
+        Row: {
+          announcement_ar: string
+          announcement_fr: string
+          bulk_tiers: Json
+          currency_ar: string
+          currency_fr: string
+          delivery_da: number
+          facebook: string
+          id: number
+          instagram: string
+          order_note_ar: string
+          order_note_fr: string
+          phone_display: string
+          price_da: number
+          show_prices: boolean
+          updated_at: string
+          website: string
+          whatsapp: string
+        }
+        Insert: {
+          announcement_ar?: string
+          announcement_fr?: string
+          bulk_tiers?: Json
+          currency_ar?: string
+          currency_fr?: string
+          delivery_da?: number
+          facebook?: string
+          id?: number
+          instagram?: string
+          order_note_ar?: string
+          order_note_fr?: string
+          phone_display?: string
+          price_da?: number
+          show_prices?: boolean
+          updated_at?: string
+          website?: string
+          whatsapp?: string
+        }
+        Update: {
+          announcement_ar?: string
+          announcement_fr?: string
+          bulk_tiers?: Json
+          currency_ar?: string
+          currency_fr?: string
+          delivery_da?: number
+          facebook?: string
+          id?: number
+          instagram?: string
+          order_note_ar?: string
+          order_note_fr?: string
+          phone_display?: string
+          price_da?: number
+          show_prices?: boolean
+          updated_at?: string
+          website?: string
+          whatsapp?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
