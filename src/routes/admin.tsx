@@ -27,7 +27,25 @@ export const Route = createFileRoute("/admin")({
   component: Admin,
 });
 
-type Row = Record<string, any>;
+type OrderRow = {
+  id: string;
+  name: string;
+  phone: string;
+  wilaya: string;
+  qty: number;
+  total_da: number;
+  status: string;
+  created_at: string;
+};
+
+type ReviewRow = {
+  id: string;
+  name: string;
+  rating: number;
+  text: string;
+  approved: boolean;
+  created_at: string;
+};
 
 const box = "rounded-2xl border border-line bg-card p-6";
 const input =
@@ -50,8 +68,8 @@ function Admin() {
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(false);
   const [settings, setSettings] = useState<SiteSettings>(DEFAULT_SETTINGS);
-  const [reviews, setReviews] = useState<Row[]>([]);
-  const [orders, setOrders] = useState<Row[]>([]);
+  const [reviews, setReviews] = useState<ReviewRow[]>([]);
+  const [orders, setOrders] = useState<OrderRow[]>([]);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [tab, setTab] = useState<"settings" | "orders" | "reviews">("settings");
