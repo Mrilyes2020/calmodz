@@ -142,3 +142,75 @@
     color: var(--color-foreground);
   }
 }
+
+/* ===== CALMO brand design system ===== */
+@theme {
+  --color-night: #141008;
+  --color-night2: #201a10;
+  --color-sand: #fbf4e8;
+  --color-sand2: #f3e9d6;
+  --color-ink: #141008;
+  --color-gold: #b67420;
+  --color-gold-lt: #e8c97a;
+  --color-gold-ink: #98611b;
+  --color-wa: #0f7b3d;
+  --color-card: #fffdf8;
+  --color-line: #e5d5b8;
+  --font-sans: "Tajawal", ui-sans-serif, system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-sand);
+  color: var(--color-ink);
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal-in linear both;
+      animation-timeline: view();
+      animation-range: entry 5% cover 30%;
+    }
+  }
+}
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+fieldset {
+  min-inline-size: 0;
+}
+
+.gold-rule {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.gold-rule::before,
+.gold-rule::after {
+  content: "";
+  height: 1px;
+  flex: 1;
+  background: linear-gradient(to var(--rule-dir, right), transparent, var(--color-gold));
+}
+.gold-rule::after {
+  --rule-dir: left;
+}
+.gold-rule > span {
+  color: var(--color-gold);
+  font-size: 0.65rem;
+}
