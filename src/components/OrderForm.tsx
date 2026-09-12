@@ -82,39 +82,43 @@ export function OrderForm({
   };
 
   const inputCls =
-    "w-full rounded-xl border border-line bg-card px-4 py-3 text-ink outline-none transition focus:border-gold focus:ring-2 focus:ring-gold/30";
-  const errCls = "mt-1 text-sm font-bold text-gold-ink";
+    "w-full rounded-2xl border border-white/10 bg-black/40 p-4 text-white outline-none transition placeholder:text-white/25 focus:border-gold";
+  const labelCls = "block text-[11px] font-black uppercase tracking-widest text-gold";
+  const errCls = "mt-1 text-sm font-bold text-gold-lt";
 
   return (
     <form
       onSubmit={onSubmit}
       noValidate
-      className="rounded-3xl border border-line bg-card p-6 shadow-[0_8px_24px_-14px_rgba(20,16,8,.18)] sm:p-8"
+      className="relative overflow-hidden rounded-[48px] border border-white/10 bg-white/5 p-8 sm:p-12"
     >
-      <fieldset className="grid min-w-0 gap-5">
-        <div>
-          <label htmlFor="ord-name" className="mb-1 block font-bold">
-            {t.order.name} *
-          </label>
-          <input
-            id="ord-name"
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder={t.order.namePh}
-            aria-invalid={Boolean(errors.name)}
-            className={inputCls}
-          />
-          {errors.name && (
-            <p role="alert" className={errCls}>
-              {errors.name}
-            </p>
-          )}
-        </div>
-
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label htmlFor="ord-phone" className="mb-1 block font-bold">
+      <div
+        className="absolute -mr-32 -mt-32 right-0 top-0 h-64 w-64 rounded-full bg-gold/5 blur-[100px]"
+        aria-hidden
+      />
+      <fieldset className="relative z-10 grid min-w-0 gap-7">
+        <div className="grid gap-7 md:grid-cols-2">
+          <div className="flex flex-col gap-2.5">
+            <label htmlFor="ord-name" className={labelCls}>
+              {t.order.name} *
+            </label>
+            <input
+              id="ord-name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder={t.order.namePh}
+              aria-invalid={Boolean(errors.name)}
+              className={inputCls}
+            />
+            {errors.name && (
+              <p role="alert" className={errCls}>
+                {errors.name}
+              </p>
+            )}
+          </div>
+          <div className="flex flex-col gap-2.5">
+            <label htmlFor="ord-phone" className={labelCls}>
               {t.order.phone} *
             </label>
             <input
@@ -134,29 +138,30 @@ export function OrderForm({
               </p>
             )}
           </div>
-          <div>
-            <label htmlFor="ord-wilaya" className="mb-1 block font-bold">
-              {t.order.wilaya} *
-            </label>
-            <input
-              id="ord-wilaya"
-              type="text"
-              value={wilaya}
-              onChange={(e) => setWilaya(e.target.value)}
-              placeholder={t.order.wilayaPh}
-              aria-invalid={Boolean(errors.wilaya)}
-              className={inputCls}
-            />
-            {errors.wilaya && (
-              <p role="alert" className={errCls}>
-                {errors.wilaya}
-              </p>
-            )}
-          </div>
         </div>
 
-        <div>
-          <label htmlFor="ord-qty" className="mb-1 block font-bold">
+        <div className="flex flex-col gap-2.5">
+          <label htmlFor="ord-wilaya" className={labelCls}>
+            {t.order.wilaya} *
+          </label>
+          <input
+            id="ord-wilaya"
+            type="text"
+            value={wilaya}
+            onChange={(e) => setWilaya(e.target.value)}
+            placeholder={t.order.wilayaPh}
+            aria-invalid={Boolean(errors.wilaya)}
+            className={inputCls}
+          />
+          {errors.wilaya && (
+            <p role="alert" className={errCls}>
+              {errors.wilaya}
+            </p>
+          )}
+        </div>
+
+        <div className="flex flex-col gap-2.5">
+          <label htmlFor="ord-qty" className={labelCls}>
             {t.order.qty}
           </label>
           <div className="flex items-center gap-4">
@@ -169,29 +174,27 @@ export function OrderForm({
               onChange={(e) => setQty(Number(e.target.value))}
               className="accent-gold flex-1"
             />
-            <span className="min-w-20 rounded-xl border border-line bg-sand px-3 py-2 text-center font-extrabold text-gold-ink">
+            <span className="min-w-24 rounded-2xl border border-gold/30 bg-gold/10 px-3 py-2 text-center font-extrabold text-gold">
               {qty} {qty === 1 ? t.order.box : t.order.boxes}
             </span>
           </div>
         </div>
 
         {settings.show_prices && (
-          <div className="grid gap-1.5 rounded-2xl border border-line bg-sand2 p-5 text-sm">
+          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/30 p-6 text-sm text-white/70">
             <div className="flex justify-between">
               <span>
                 {p.unit} × {qty}
               </span>
-              <span className="font-bold">{money(totals.goods, lang, settings)}</span>
+              <span className="font-bold text-white">{money(totals.goods, lang, settings)}</span>
             </div>
             <div className="flex justify-between">
               <span>{p.delivery}</span>
-              <span className="font-bold">{money(totals.delivery, lang, settings)}</span>
+              <span className="font-bold text-white">{money(totals.delivery, lang, settings)}</span>
             </div>
-            <div className="mt-1 flex justify-between border-t border-line pt-2 text-lg">
-              <span className="font-extrabold text-gold-ink">{p.total}</span>
-              <span className="font-extrabold text-gold-ink">
-                {money(totals.total, lang, settings)}
-              </span>
+            <div className="mt-1 flex justify-between border-t border-white/10 pt-3 text-lg">
+              <span className="font-black text-gold">{p.total}</span>
+              <span className="font-black text-gold">{money(totals.total, lang, settings)}</span>
             </div>
           </div>
         )}
@@ -199,11 +202,11 @@ export function OrderForm({
         <button
           type="submit"
           disabled={sending}
-          className="rounded-full bg-wa px-7 py-3.5 font-extrabold text-white transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+          className="rounded-2xl bg-gold py-5 text-lg font-black text-night transition-all hover:shadow-[0_20px_50px_rgba(197,160,89,0.2)] disabled:opacity-60"
         >
-          💬 {t.order.submit}
+          {t.order.submit}
         </button>
-        <p className="text-sm text-ink/70">
+        <p className="text-sm text-white/40">
           {(lang === "ar" ? settings.order_note_ar : settings.order_note_fr) || t.order.note}
         </p>
       </fieldset>
