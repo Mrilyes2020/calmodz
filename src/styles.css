@@ -143,20 +143,22 @@
   }
 }
 
-/* ===== CALMO brand design system ===== */
+/* ===== CALMO brand design system — dark luxury editorial ===== */
 @theme {
-  --color-night: #141008;
-  --color-night2: #201a10;
+  --color-night: #050805;
+  --color-night2: #080d08;
+  --color-night3: #0c140c;
   --color-sand: #fbf4e8;
   --color-sand2: #f3e9d6;
   --color-ink: #141008;
-  --color-gold: #b67420;
-  --color-gold-lt: #e8c97a;
-  --color-gold-ink: #98611b;
-  --color-wa: #0f7b3d;
+  --color-gold: #c5a059;
+  --color-gold-lt: #e8d5b5;
+  --color-gold-ink: #c5a059;
+  --color-wa: #25d366;
   --color-card: #fffdf8;
   --color-line: #e5d5b8;
-  --font-sans: "Tajawal", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Cairo", "Tajawal", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Amiri", "Cairo", serif;
 }
 
 html {
@@ -165,8 +167,8 @@ html {
 
 body {
   font-family: var(--font-sans);
-  background: var(--color-sand);
-  color: var(--color-ink);
+  background: var(--color-night);
+  color: #fff;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
 }
