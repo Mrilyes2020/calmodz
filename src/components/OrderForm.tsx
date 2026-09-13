@@ -3,6 +3,8 @@ import type { T } from "@/i18n/content";
 import { supabase } from "@/integrations/supabase/client";
 import { money, orderTotals, type SiteSettings } from "@/lib/settings";
 import { PRICE_T } from "@/i18n/pricing";
+import { Button } from "@/components/ui/button";
+import { MessageCircle, PackageCheck, ShieldCheck } from "lucide-react";
 
 type TT = (typeof T)["ar"];
 type Errors = { name?: string; phone?: string; wilaya?: string };
@@ -82,21 +84,26 @@ export function OrderForm({
   };
 
   const inputCls =
-    "w-full rounded-2xl border border-white/10 bg-black/40 p-4 text-white outline-none transition placeholder:text-white/25 focus:border-gold";
-  const labelCls = "block text-[11px] font-black uppercase tracking-widest text-gold";
+    "w-full rounded-md border border-sand/10 bg-night px-4 py-3.5 text-sand outline-none transition placeholder:text-sand/30 focus:border-gold focus:ring-2 focus:ring-gold/20";
+  const labelCls = "block text-xs font-bold text-gold-lt";
   const errCls = "mt-1 text-sm font-bold text-gold-lt";
 
   return (
     <form
       onSubmit={onSubmit}
       noValidate
-      className="relative overflow-hidden rounded-[48px] border border-white/10 bg-white/5 p-8 sm:p-12"
+      className="relative overflow-hidden rounded-lg border border-sand/10 bg-night2 p-5 shadow-editorial sm:p-10"
     >
-      <div
-        className="absolute -mr-32 -mt-32 right-0 top-0 h-64 w-64 rounded-full bg-gold/5 blur-[100px]"
-        aria-hidden
-      />
       <fieldset className="relative z-10 grid min-w-0 gap-7">
+        <div className="flex items-center gap-3 border-b border-sand/10 pb-5">
+          <span className="grid h-11 w-11 place-items-center rounded-full bg-gold/10 text-gold">
+            <PackageCheck className="h-5 w-5" aria-hidden />
+          </span>
+          <div>
+            <p className="font-extrabold text-sand">{t.order.title}</p>
+            <p className="text-xs text-sand/45">{t.order.note}</p>
+          </div>
+        </div>
         <div className="grid gap-7 md:grid-cols-2">
           <div className="flex flex-col gap-2.5">
             <label htmlFor="ord-name" className={labelCls}>
@@ -174,39 +181,43 @@ export function OrderForm({
               onChange={(e) => setQty(Number(e.target.value))}
               className="accent-gold flex-1"
             />
-            <span className="min-w-24 rounded-2xl border border-gold/30 bg-gold/10 px-3 py-2 text-center font-extrabold text-gold">
+             <span className="min-w-24 rounded-md border border-gold/30 bg-gold/10 px-3 py-2 text-center font-extrabold text-gold">
               {qty} {qty === 1 ? t.order.box : t.order.boxes}
             </span>
           </div>
         </div>
 
         {settings.show_prices && (
-          <div className="grid gap-2 rounded-2xl border border-white/10 bg-black/30 p-6 text-sm text-white/70">
+          <div className="grid gap-2 rounded-md border border-sand/10 bg-night p-5 text-sm text-sand/65">
             <div className="flex justify-between">
               <span>
                 {p.unit} × {qty}
               </span>
-              <span className="font-bold text-white">{money(totals.goods, lang, settings)}</span>
+              <span className="font-bold text-sand">{money(totals.goods, lang, settings)}</span>
             </div>
             <div className="flex justify-between">
               <span>{p.delivery}</span>
-              <span className="font-bold text-white">{money(totals.delivery, lang, settings)}</span>
+              <span className="font-bold text-sand">{money(totals.delivery, lang, settings)}</span>
             </div>
-            <div className="mt-1 flex justify-between border-t border-white/10 pt-3 text-lg">
+            <div className="mt-1 flex justify-between border-t border-sand/10 pt-3 text-lg">
               <span className="font-black text-gold">{p.total}</span>
               <span className="font-black text-gold">{money(totals.total, lang, settings)}</span>
             </div>
           </div>
         )}
 
-        <button
+        <Button
           type="submit"
           disabled={sending}
-          className="rounded-2xl bg-gold py-5 text-lg font-black text-night transition-all hover:shadow-[0_20px_50px_rgba(197,160,89,0.2)] disabled:opacity-60"
+          variant="gold"
+          size="xl"
+          className="w-full"
         >
+          <MessageCircle className="h-5 w-5" aria-hidden />
           {t.order.submit}
-        </button>
-        <p className="text-sm text-white/40">
+        </Button>
+        <p className="flex items-start gap-2 text-xs leading-relaxed text-sand/45">
+          <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden />
           {(lang === "ar" ? settings.order_note_ar : settings.order_note_fr) || t.order.note}
         </p>
       </fieldset>

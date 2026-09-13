@@ -2,6 +2,8 @@ import { useState } from "react";
 import type { T } from "@/i18n/content";
 import { supabase } from "@/integrations/supabase/client";
 import type { PublicReview } from "@/lib/site.functions";
+import { Button } from "@/components/ui/button";
+import { MessageSquareQuote, Star } from "lucide-react";
 
 type TT = (typeof T)["ar"];
 
@@ -9,9 +11,10 @@ const RATINGS = [5, 4, 3, 2, 1];
 
 function Stars({ n }: { n: number }) {
   return (
-    <span aria-label={`${n}/5`} className="text-gold tracking-wide">
-      {"★".repeat(n)}
-      <span className="text-line">{"★".repeat(5 - n)}</span>
+    <span aria-label={`${n}/5`} className="flex gap-0.5 text-gold">
+      {Array.from({ length: 5 }, (_, index) => (
+        <Star key={index} className={`h-4 w-4 ${index < n ? "fill-current" : "text-sand/15"}`} />
+      ))}
     </span>
   );
 }
@@ -64,22 +67,22 @@ export function Reviews({
   };
 
   const inputCls =
-    "w-full rounded-xl border border-white/15 bg-night2 px-4 py-3 text-white outline-none transition placeholder:text-white/40 focus:border-gold focus:ring-2 focus:ring-gold/30";
+    "w-full rounded-md border border-sand/10 bg-night px-4 py-3 text-sand outline-none transition placeholder:text-sand/30 focus:border-gold focus:ring-2 focus:ring-gold/20";
   const errCls = "mt-1 text-sm font-bold text-gold-lt";
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+    <div className="grid gap-6 lg:grid-cols-[0.85fr_1.15fr]">
       <form
         onSubmit={onSubmit}
         noValidate
-        className="h-fit rounded-3xl border border-white/10 bg-night2 p-6 sm:p-8"
+        className="h-fit rounded-lg border border-sand/10 bg-night2 p-6 shadow-editorial sm:p-8"
       >
-        <h3 className="mb-5 text-xl font-extrabold text-gold-lt">
-          ✍️ {t.reviews.formTitle}
+        <h3 className="mb-5 flex items-center gap-3 text-xl font-extrabold text-gold-lt">
+          <MessageSquareQuote className="h-5 w-5" aria-hidden /> {t.reviews.formTitle}
         </h3>
         <fieldset className="grid min-w-0 gap-5">
           <div>
-            <label htmlFor="rev-name" className="mb-1 block font-bold text-white">
+            <label htmlFor="rev-name" className="mb-1 block font-bold text-sand">
               {t.reviews.name} *
             </label>
             <input
@@ -98,7 +101,7 @@ export function Reviews({
           </div>
 
           <div>
-            <label htmlFor="rev-rating" className="mb-1 block font-bold text-white">
+            <label htmlFor="rev-rating" className="mb-1 block font-bold text-sand">
               {t.reviews.rating}
             </label>
             <select
@@ -116,7 +119,7 @@ export function Reviews({
           </div>
 
           <div>
-            <label htmlFor="rev-text" className="mb-1 block font-bold text-white">
+            <label htmlFor="rev-text" className="mb-1 block font-bold text-sand">
               {t.reviews.text} *
             </label>
             <textarea
@@ -134,45 +137,47 @@ export function Reviews({
             )}
           </div>
 
-          <button
+          <Button
             type="submit"
             disabled={sending}
-            className="rounded-full bg-gold px-7 py-3 font-extrabold text-night transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+            variant="gold"
+            size="xl"
+            className="w-full"
           >
             {t.reviews.submit}
-          </button>
+          </Button>
 
           {justPosted && (
             <div
               role="status"
               aria-live="polite"
-              className="rounded-xl border border-gold/40 bg-gold/10 p-4"
+              className="rounded-md border border-gold/40 bg-gold/10 p-4"
             >
               <p className="font-extrabold text-gold-lt">{t.reviews.successTitle}</p>
-              <p className="mt-1 text-sm text-white/75">{PENDING[lang]}</p>
+              <p className="mt-1 text-sm text-sand/75">{PENDING[lang]}</p>
             </div>
           )}
         </fieldset>
       </form>
 
       <div>
-        <p className="mb-4 text-sm font-bold text-white/60">
+        <p className="mb-4 text-sm font-bold text-sand/60">
           {t.reviews.sampleNote} · {reviews.length}
         </p>
         {reviews.length === 0 ? (
-          <div className="grid min-h-48 place-items-center rounded-3xl border border-dashed border-white/15 p-10 text-center text-white/60">
+          <div className="grid min-h-48 place-items-center rounded-lg border border-dashed border-sand/15 p-10 text-center text-sand/60">
             {t.reviews.empty}
           </div>
         ) : (
           <ul className="grid gap-4">
             {reviews.map((r) => (
-              <li key={r.id} className="rounded-2xl border border-white/10 bg-night2 p-5">
+              <li key={r.id} className="rounded-lg border border-sand/10 bg-night2 p-5">
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  <p className="font-extrabold text-white">{r.name}</p>
+                  <p className="font-extrabold text-sand">{r.name}</p>
                   <Stars n={r.rating} />
                 </div>
-                <p className="mt-2 text-white/85">{r.text}</p>
-                <p className="mt-2 text-xs text-white/50">
+                <p className="mt-2 text-sand/85">{r.text}</p>
+                <p className="mt-2 text-xs text-sand/45">
                   {new Date(r.created_at).toLocaleDateString(
                     lang === "ar" ? "ar-DZ" : "fr-DZ",
                     { year: "numeric", month: "long", day: "numeric" },
