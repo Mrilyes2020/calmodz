@@ -135,7 +135,7 @@ function Index() {
                 {money(unitPrice(settings, 1), lang, settings)} — {t.hero.badge}
               </div>
             )}
-            <h1 className="mb-6 max-w-3xl font-display text-4xl font-extrabold leading-[1.25] sm:text-5xl md:text-7xl lg:mb-8">
+            <h1 className="mb-6 max-w-3xl font-display text-[26px] font-extrabold leading-[1.35] sm:text-4xl md:text-6xl lg:mb-8 lg:text-7xl">
               {t.hero.titleA}
               <br />
               <span className="text-gold">{t.hero.titleB}</span>
