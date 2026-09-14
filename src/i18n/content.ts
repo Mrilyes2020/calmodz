@@ -214,7 +214,7 @@ const fr: typeof ar = {
     submit: "Publier mon avis",
     errName: "Veuillez entrer votre nom",
     errText: "Écrivez votre avis (10 caractères minimum)",
-    successTitle: "Merci pour votre partage ! 🌿",
+    successTitle: "Merci pour votre partage !",
     successBody:
       "Votre avis apparaît maintenant dans la liste de cette page. Note : cette version d'essai le conserve dans votre navigateur uniquement.",
     pendingNote:
