@@ -297,8 +297,9 @@ function Index() {
               </li>
             )})}
           </ol>
-          <p className="mt-8 rounded-md border border-sand/10 bg-night2 p-4 text-sm font-medium text-sand/70">
-            📦 {t.usage.storage}
+          <p className="mt-8 flex items-start gap-2 rounded-md border border-sand/10 bg-night2 p-4 text-sm font-medium text-sand/70">
+            <Package className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden />
+            {t.usage.storage}
           </p>
 
           <div className="mt-4 rounded-md border border-gold/25 bg-gold/5 p-6 md:p-8">
