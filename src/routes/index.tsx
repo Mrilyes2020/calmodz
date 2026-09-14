@@ -135,12 +135,12 @@ function Index() {
                 {money(unitPrice(settings, 1), lang, settings)} — {t.hero.badge}
               </div>
             )}
-            <h1 className="mb-6 max-w-3xl font-display text-4xl font-extrabold leading-[1.25] sm:text-5xl md:text-7xl lg:mb-8">
+            <h1 className="mb-6 max-w-3xl font-display text-[26px] font-extrabold leading-[1.35] sm:text-4xl md:text-6xl lg:mb-8 lg:text-7xl">
               {t.hero.titleA}
               <br />
               <span className="text-gold">{t.hero.titleB}</span>
             </h1>
-            <p className="mb-8 max-w-xl text-base leading-loose text-sand/62 lg:mb-10 lg:text-lg">{t.hero.lede}</p>
+            <p className="mb-8 max-w-xl text-base leading-loose text-sand/60 lg:mb-10 lg:text-lg">{t.hero.lede}</p>
             <div className="grid gap-3 sm:flex sm:flex-wrap">
               <Button asChild variant="gold" size="xl" className="sm:px-9">
                 <a href="#order"><ShoppingBag aria-hidden />{t.hero.cta}</a>
@@ -297,8 +297,9 @@ function Index() {
               </li>
             )})}
           </ol>
-          <p className="mt-8 rounded-md border border-sand/10 bg-night2 p-4 text-sm font-medium text-sand/70">
-            📦 {t.usage.storage}
+          <p className="mt-8 flex items-start gap-2 rounded-md border border-sand/10 bg-night2 p-4 text-sm font-medium text-sand/70">
+            <Package className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden />
+            {t.usage.storage}
           </p>
 
           <div className="mt-4 rounded-md border border-gold/25 bg-gold/5 p-6 md:p-8">

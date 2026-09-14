@@ -105,12 +105,12 @@ const ar = {
     submit: "انشر رأيي",
     errName: "اكتب اسمك من فضلك",
     errText: "اكتب رأيك (10 أحرف على الأقل)",
-    successTitle: "شكرًا لمشاركتك! 🌿",
+    successTitle: "شكرًا لمشاركتك!",
     successBody:
       "رأيك الآن معروض في قائمة الآراء على هذه الصفحة. ملاحظة: هذه النسخة التجريبية تحفظ الرأي في متصفحك فقط.",
     pendingNote:
       "TODO(client-data): ربط الآراء بقاعدة بيانات + مراجعة قبل النشر العام",
-    empty: "كن أول من يشارك تجربته مع CALMO ✨",
+    empty: "كن أول من يشارك تجربته مع CALMO",
     sampleNote: "آراء تظهر هنا فور نشرها",
   },
   order: {
@@ -214,12 +214,12 @@ const fr: typeof ar = {
     submit: "Publier mon avis",
     errName: "Veuillez entrer votre nom",
     errText: "Écrivez votre avis (10 caractères minimum)",
-    successTitle: "Merci pour votre partage ! 🌿",
+    successTitle: "Merci pour votre partage !",
     successBody:
       "Votre avis apparaît maintenant dans la liste de cette page. Note : cette version d'essai le conserve dans votre navigateur uniquement.",
     pendingNote:
       "TODO(client-data): connecter les avis à une base de données + modération",
-    empty: "Soyez le premier à partager votre expérience ✨",
+    empty: "Soyez le premier à partager votre expérience",
     sampleNote: "Les avis publiés apparaissent ici",
   },
   order: {

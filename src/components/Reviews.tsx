@@ -20,8 +20,8 @@ function Stars({ n }: { n: number }) {
 }
 
 const PENDING = {
-  ar: "شكرًا لك! سيظهر رأيك بعد مراجعته من طرف الفريق. 🌿",
-  fr: "Merci ! Votre avis sera publié après validation par l'équipe. 🌿",
+  ar: "شكرًا لك! سيظهر رأيك بعد مراجعته من طرف الفريق.",
+  fr: "Merci ! Votre avis sera publié après validation par l'équipe.",
 };
 
 /** Customer reviews — stored in the backend and published after approval. */
