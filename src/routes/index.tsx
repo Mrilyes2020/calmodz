@@ -140,7 +140,7 @@ function Index() {
               <br />
               <span className="text-gold">{t.hero.titleB}</span>
             </h1>
-            <p className="mb-8 max-w-xl text-base leading-loose text-sand/62 lg:mb-10 lg:text-lg">{t.hero.lede}</p>
+            <p className="mb-8 max-w-xl text-base leading-loose text-sand/60 lg:mb-10 lg:text-lg">{t.hero.lede}</p>
             <div className="grid gap-3 sm:flex sm:flex-wrap">
               <Button asChild variant="gold" size="xl" className="sm:px-9">
                 <a href="#order"><ShoppingBag aria-hidden />{t.hero.cta}</a>
