@@ -151,9 +151,9 @@
   --color-sand: oklch(0.97 0.025 84);
   --color-sand2: oklch(0.925 0.035 84);
   --color-ink: oklch(0.18 0.02 70);
-  --color-gold: oklch(0.72 0.105 78);
-  --color-gold-lt: oklch(0.86 0.055 78);
-  --color-gold-ink: oklch(0.62 0.11 75);
+  --color-gold: oklch(0.73 0.115 80);
+  --color-gold-lt: oklch(0.88 0.06 80);
+  --color-gold-ink: oklch(0.64 0.12 78);
   --color-wa: oklch(0.74 0.18 145);
   --color-card: oklch(0.988 0.008 84);
   --color-line: oklch(0.86 0.05 80);
