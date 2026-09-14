@@ -219,7 +219,7 @@ const fr: typeof ar = {
       "Votre avis apparaît maintenant dans la liste de cette page. Note : cette version d'essai le conserve dans votre navigateur uniquement.",
     pendingNote:
       "TODO(client-data): connecter les avis à une base de données + modération",
-    empty: "Soyez le premier à partager votre expérience ✨",
+    empty: "Soyez le premier à partager votre expérience",
     sampleNote: "Les avis publiés apparaissent ici",
   },
   order: {
